@@ -100,10 +100,6 @@ class Admin
             $arg['posts_per_page'] = $_POST['posts_per_page'];
         }
 
-        // Check Custom Meta
-        $arg['meta_query'] = array();
-        $arg['meta_query']['relation'] = 'AND';
-
         // Get Form Field
         $form_fields_keys = self::getFormFields($_POST['form_key'], true);
 
@@ -148,6 +144,10 @@ class Admin
                     <select name="form_key">
                         <?php
                         foreach ($form_list as $array) {
+                            $entry_list = self::getEntryList($array['key']);
+                            if (count($entry_list) < 1) {
+                                continue;
+                            }
                             ?>
                             <option value="<?php echo $array['key']; ?>"><?php echo $array['title']; ?></option>
                             <?php
